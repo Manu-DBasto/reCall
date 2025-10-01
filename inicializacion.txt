@@ -1,0 +1,15 @@
+Hola papus. Esta es una guia para inicializar el proyecto por si la ocupan.
+    - Para empezar deben de bajar el proyecto de github a su local, si no lo han hecho.
+    - Una vez instalado deberan instalar el proyecto con el comando "npm install" en la raiz del proyecto.
+    - Moverse a la carpeta con el api rest para base de datos "pendiente-por-hacer" e instalarla con el mismo comando.
+    - Por ultimo, para ejecutar el proyecto solo es necesario usar "npx expo start" en una terminal. 
+
+Consideraciones
+Me gustaria trabajar de forma más ordenada este proyecto, asi que les explico mas o menos como ordeno las carpetas:
+    - En src estarán los archivos para el funcionamiento de la app. 
+    - Entre ellos esta la carpeta routes, donde estarán los archivos de las interfaces o rutas. Osea los principales donde se unen componentes y asi.
+    - En components estarán los diferentes componentes que conformen las interfaces. Ya sean modales, botones o cosas asi que hayan creado.
+      Mi recomendacion es trabajar aprovechando los componentes, para que no nos queden archivos unicos muuuuy largos.
+    - Dentro de components tambien podriamos separar las cosas segun funcionalidad o tipo, pero eso lo vemos luego.
+Shaw!
+
