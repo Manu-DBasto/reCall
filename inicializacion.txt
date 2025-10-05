@@ -12,4 +12,3 @@ Me gustaria trabajar de forma más ordenada este proyecto, asi que les explico m
       Mi recomendacion es trabajar aprovechando los componentes, para que no nos queden archivos unicos muuuuy largos.
     - Dentro de components tambien podriamos separar las cosas segun funcionalidad o tipo, pero eso lo vemos luego.
 Shaw!
-

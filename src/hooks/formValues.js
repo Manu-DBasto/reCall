@@ -3,12 +3,12 @@ import React, { useState } from "react";
 export const useTextInput = (formData = {}) => {
     const [data, setData] = useState(formData);
 
-    const onInputChange = (e) => {
+    const onInputChange = (input, value) => {
         // console.log(e);
 
         setData({
             ...data,
-            [e.target.id]: e.nativeEvent.text,
+            [input]: value,
         });
     };
     return {
