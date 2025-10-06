@@ -11,6 +11,14 @@ import {
     TouchableOpacity,
 } from "react-native";
 import { useTextInput } from "../hooks/formValues";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile,
+} from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../../firebase-config";
 
 export default function Signup({ navigation }) {
     const { onInputChange, data } = useTextInput({
@@ -19,8 +27,24 @@ export default function Signup({ navigation }) {
         password: "",
         confirm_password: "",
     });
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
     const onSubmit = () => {
         console.log(data);
+        createUserWithEmailAndPassword(auth, data.email, data.password)
+            .then(() => {
+                console.log("account created");
+                const user = userCredential.user;
+                return updateProfile(user, {
+                    displayName: data.name,
+                });
+            })
+
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (
@@ -87,7 +111,7 @@ export default function Signup({ navigation }) {
                                 navigation.navigate("Login");
                             }}
                         >
-                            Inicie sesion.
+                            <Text>Inicie sesion.</Text>
                         </TouchableOpacity>
                     </Text>
                 </View>

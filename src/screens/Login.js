@@ -6,19 +6,25 @@ import {
     ScrollView,
     StyleSheet,
     TextInput,
-    Button,
     Platform,
     TouchableOpacity,
 } from "react-native";
 import { useTextInput } from "../hooks/formValues";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+} from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../../firebase-config";
 
 export default function Login({ navigation }) {
     const { onInputChange, data } = useTextInput({
-        name: "",
         email: "",
         password: "",
-        confirm_password: "",
     });
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const onSubmit = () => {
         console.log(data);
     };
@@ -68,7 +74,7 @@ export default function Login({ navigation }) {
                                 navigation.navigate("Signup");
                             }}
                         >
-                            Registrese
+                            <Text>Registrese</Text>
                         </TouchableOpacity>
                     </Text>
                 </View>
