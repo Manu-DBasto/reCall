@@ -22,10 +22,10 @@ export const CreateUser = async (data) => {
             createdAt: new Date(),
         });
 
-        console.log("Usuario creado y guardado con éxito.");
+        console.log("User created succesfully");
         return user;
     } catch (error) {
-        console.error("Error al crear el usuario:", error);
-        throw error; // se relanza para manejarlo desde la UI
+        console.error("Error creating user:", error);
+        throw error;
     }
 };

@@ -10,19 +10,22 @@ import {
     TouchableOpacity,
 } from "react-native";
 import { useTextInput } from "../hooks/formValues";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../../firebase-config";
+import { LoginUser } from "../scripts/users/LoginUser";
 
 export default function Login({ navigation }) {
     const { onInputChange, data } = useTextInput({
         email: "",
         password: "",
     });
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const onSubmit = () => {
+
+    const onSubmit = async () => {
         console.log(data);
+        try {
+            await LoginUser(data);
+            alert("Acceso autorizado");
+        } catch (error) {
+            alert("Ocurrio un error. ", error.message);
+        }
     };
 
     return (
