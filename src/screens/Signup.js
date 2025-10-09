@@ -18,7 +18,7 @@ import {
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebase-config";
 import { setDoc, getFirestore, doc } from "firebase/firestore";
-import { useConnect } from "../hooks/useConnect";
+import { CreateUser } from "../scripts/users/CreateUser";
 export default function Signup({ navigation }) {
     const { onInputChange, data } = useTextInput({
         name: "",
@@ -27,34 +27,45 @@ export default function Signup({ navigation }) {
         confirm_password: "",
     });
 
-    // const { app, db } = useConnect;
+    // const app = initializeApp(firebaseConfig);
+    // const db = getFirestore(app);
+    // const auth = getAuth(app);
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
+    const onSubmit = async () => {
+        // createUserWithEmailAndPassword(auth, data.email, data.password)
+        //     .then((userCredential) => {
+        //         console.log("Usuario creado con exito");
+        //         const user = userCredential.user;
+        //         return updateProfile(user, {
+        //             displayName: data.name,
+        //         }).then(() => user);
+        //     })
+        //     .then((user) => {
+        //         return setDoc(doc(db, "users", user.uid), {
+        //             name: data.name,
+        //             email: data.email,
+        //             createdAt: new Date(),
+        //         });
+        //     })
+        //     .then(() => {
+        //         console.log("Datos de usuario guardados con exito.");
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
 
-    const onSubmit = () => {
-        createUserWithEmailAndPassword(auth, data.email, data.password)
-            .then((userCredential) => {
-                console.log("Usuario creado con exito");
-                const user = userCredential.user;
-                return updateProfile(user, {
-                    displayName: data.name,
-                }).then(() => user);
-            })
-            .then((user) => {
-                return setDoc(doc(db, "users", user.uid), {
-                    name: data.name,
-                    email: data.email,
-                    createdAt: new Date(),
-                });
-            })
-            .then(() => {
-                console.log("Datos de usuario guardados con exito.");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        if (data.password !== data.confirm_password) {
+            Alert.alert("Error", "Las contraseñas no coinciden");
+            return;
+        }
+
+        try {
+            await CreateUser(data);
+            Alert.alert("Éxito", "Usuario creado correctamente");
+            navigation.navigate("Login");
+        } catch (error) {
+            Alert.alert("Error", error.message);
+        }
     };
 
     return (
