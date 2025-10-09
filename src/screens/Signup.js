@@ -6,7 +6,6 @@ import {
     ScrollView,
     StyleSheet,
     TextInput,
-    Button,
     Platform,
     TouchableOpacity,
 } from "react-native";
@@ -14,12 +13,12 @@ import { useTextInput } from "../hooks/formValues";
 import {
     getAuth,
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
     updateProfile,
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebase-config";
-
+import { setDoc, getFirestore, doc } from "firebase/firestore";
+import { useConnect } from "../hooks/useConnect";
 export default function Signup({ navigation }) {
     const { onInputChange, data } = useTextInput({
         name: "",
@@ -28,20 +27,31 @@ export default function Signup({ navigation }) {
         confirm_password: "",
     });
 
+    // const { app, db } = useConnect;
+
     const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
     const auth = getAuth(app);
 
     const onSubmit = () => {
-        console.log(data);
         createUserWithEmailAndPassword(auth, data.email, data.password)
-            .then(() => {
-                console.log("account created");
+            .then((userCredential) => {
+                console.log("Usuario creado con exito");
                 const user = userCredential.user;
                 return updateProfile(user, {
                     displayName: data.name,
+                }).then(() => user);
+            })
+            .then((user) => {
+                return setDoc(doc(db, "users", user.uid), {
+                    name: data.name,
+                    email: data.email,
+                    createdAt: new Date(),
                 });
             })
-
+            .then(() => {
+                console.log("Datos de usuario guardados con exito.");
+            })
             .catch((error) => {
                 console.log(error);
             });

@@ -10,11 +10,7 @@ import {
     TouchableOpacity,
 } from "react-native";
 import { useTextInput } from "../hooks/formValues";
-import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../firebase-config";
 
