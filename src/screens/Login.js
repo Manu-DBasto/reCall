@@ -11,17 +11,19 @@ import {
 } from "react-native";
 import { useTextInput } from "../hooks/formValues";
 import { LoginUser } from "../scripts/users/LoginUser";
+import { useAuth } from "../auth/AuthProvider";
 
 export default function Login({ navigation }) {
+    const { AuthUser } = useAuth();
     const { onInputChange, data } = useTextInput({
         email: "",
         password: "",
     });
 
     const onSubmit = async () => {
-        console.log(data);
         try {
-            await LoginUser(data);
+            const user = await LoginUser(data);
+            AuthUser(user);
             alert("Acceso autorizado");
         } catch (error) {
             alert("Ocurrio un error. ", error.message);

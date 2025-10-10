@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../database";
 
-export const LoginUser = async (data = {}) => {
+export async function LoginUser(data) {
     try {
         const userCredentials = await signInWithEmailAndPassword(
             auth,
@@ -9,10 +9,10 @@ export const LoginUser = async (data = {}) => {
             data.password
         );
         const user = userCredentials.user;
-        console.log("Authorized access", user);
+        console.log("Authorized access: ", user);
         return user;
     } catch (error) {
         console.error("Error loging in user: ", error);
         throw error;
     }
-};
+}

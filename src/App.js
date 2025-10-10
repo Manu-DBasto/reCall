@@ -1,14 +1,13 @@
-import react from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import AuthNavigator from "./routes/AuthNavigator";
-import AppNavigator from "./routes/AppNavigator";
-
-const user = false;
+import { NavigatorHandler } from "./auth/NavigatorHandler";
+import { AuthProvider } from "./auth/AuthProvider";
 
 export default function App() {
     return (
-        <NavigationContainer>
-            {user ? <AppNavigator /> : <AuthNavigator />}
-        </NavigationContainer>
+        <AuthProvider>
+            <NavigationContainer>
+                <NavigatorHandler />
+            </NavigationContainer>
+        </AuthProvider>
     );
 }
