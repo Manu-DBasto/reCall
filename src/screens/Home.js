@@ -1,9 +1,9 @@
 import { Text, View, Button } from "react-native";
 
-export default function Dashboard() {
+export default function Home() {
     return (
         <View>
-            <Text>Dashboard</Text>
+            <Text>Bienvenido</Text>
         </View>
     );
 }
