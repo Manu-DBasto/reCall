@@ -24,7 +24,6 @@ export default function Login({ navigation }) {
         try {
             const user = await LoginUser(data);
             AuthUser(user);
-            alert("Acceso autorizado");
         } catch (error) {
             alert("Ocurrio un error. ", error.message);
         }

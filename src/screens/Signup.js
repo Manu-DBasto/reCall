@@ -22,7 +22,7 @@ export default function Signup({ navigation }) {
 
     const onSubmit = async () => {
         if (data.password !== data.confirm_password) {
-            Alert.alert("Error", "Las contraseñas no coinciden");
+            alert("Las contraseñas no coinciden");
             return;
         }
 

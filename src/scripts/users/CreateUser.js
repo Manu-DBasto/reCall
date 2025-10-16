@@ -4,18 +4,21 @@ import { doc, setDoc } from "firebase/firestore";
 
 export const CreateUser = async (data) => {
     try {
+        /**
+         * ==============Autenticacion===============
+         * Esta parte del codigo solo es necesaria por que debo crear un usuario en la tabla de autenticacion y luego sus demas datos se guardan en firestore. Que es la base de datos que se estará utilizando, por lo tanto es la que usarán.
+         */
         const userCredential = await createUserWithEmailAndPassword(
             auth,
             data.email,
             data.password
         );
-
         const user = userCredential.user;
-
-        // Actualizar el perfil de Firebase Auth
         await updateProfile(user, { displayName: data.name });
 
-        // Guardar los datos en Firestore
+        /**
+         * ==============Creacion de usuario en firestore==========
+         */
         await setDoc(doc(db, "users", user.uid), {
             name: data.name,
             email: data.email,
