@@ -29,7 +29,7 @@ Con esto ya estaria instalado. Asi que solo tienen que ejecutar el siguiente com
 
 Para este proyecto se estará implementando una estructura parecida a la clean architecture. De forma que este más organizado y sea más profesional, asi que hay que tomar en cuenta las siguientes cuestiones.
 
--   Como consejo, revisen bien que son los componentes que importan. Debido a las librerias que estan instaladas para que React Native sea multiplataforma hay componentes que se llaman igual pero provienen de paqueterias distintas y por lo tanto funcionan o se ven diferentes. Por ejemplo: Hay <Text><Text/> de React-Native (es el que se debe utilizar), pero tambien hay de react native web o del gesture handler.
+-   Como consejo, revisen bien que son los componentes que importan. Debido a las librerias que estan instaladas para que React Native sea multiplataforma hay componentes que se llaman igual pero provienen de paqueterias distintas y por lo tanto funcionan o se ven diferentes. Por ejemplo: Hay componente Text de React-Native (es el que se debe utilizar), pero tambien hay de react native web o del gesture handler.
 -   En la carpeta /src se guardarán los principales archivos para la ejecucion del proyecto (vistas, componentes, hooks y demás.)
 -   La carpeta /src/routes/ contiene los archivos con los navigators. Estos basicamente son en donde se configura el funcionamiento y estilo de navegacion. Cuando se deba agregar una vista, se importa ahi mismo y agrega en la función.
 -   La carpeta /src/screens/ guarda los archivos principales de las vistas. Osea que estas son las que se exportan a los navigators y en ellas se importan los componentes para construir cada interfaz.
