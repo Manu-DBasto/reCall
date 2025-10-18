@@ -1,4 +1,4 @@
-import { colors } from "../../assets/colors";
+//libraries
 import {
     Text,
     View,
@@ -8,10 +8,17 @@ import {
     TextInput,
     Platform,
     TouchableOpacity,
-    Alert,
 } from "react-native";
+
+//components
+import UserForm from "../components/users/UserForm";
+
+//scripts and functions
 import { useTextInput } from "../hooks/formValues";
 import { CreateUser } from "../scripts/users/CreateUser";
+
+import { colors } from "../../assets/colors";
+
 export default function Signup({ navigation }) {
     const { onInputChange, data } = useTextInput({
         name: "",
@@ -27,13 +34,12 @@ export default function Signup({ navigation }) {
         }
 
         try {
-            await CreateUser(data);
-            // Alert.alert("Éxito", "Usuario creado correctamente");
+            const res = await CreateUser(data);
+            console.log(res.message);
             alert("Cuenta creada con exito.");
             navigation.navigate("Login");
         } catch (error) {
             alert("Ocurrio un error.", error.message);
-            // Alert.alert("Error", error.message);
         }
     };
 
@@ -46,53 +52,13 @@ export default function Signup({ navigation }) {
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <View style={styles.wrapper}>
                     <Text style={styles.title}>Registrarse</Text>
-                    <View style={styles.formContainer}>
-                        <TextInput
-                            id="name"
-                            placeholder="Nombre"
-                            autoCapitalize="words"
-                            style={styles.input}
-                            onChangeText={(e) => {
-                                onInputChange("name", e);
-                            }}
-                        />
-                        <TextInput
-                            id="email"
-                            placeholder="E-mail"
-                            autoCapitalize="words"
-                            keyboardType="email-address"
-                            style={styles.input}
-                            onChangeText={(e) => {
-                                onInputChange("email", e);
-                            }}
-                        />
-                        <TextInput
-                            id="password"
-                            placeholder="Contraseña"
-                            autoCapitalize="none"
-                            secureTextEntry
-                            style={styles.input}
-                            onChangeText={(e) => {
-                                onInputChange("password", e);
-                            }}
-                        />
-                        <TextInput
-                            id="confirm_password"
-                            placeholder="Confirmar contraseña"
-                            autoCapitalize="none"
-                            secureTextEntry
-                            style={styles.input}
-                            onChangeText={(e) => {
-                                onInputChange("confirm_password", e);
-                            }}
-                        />
-                        <TouchableOpacity
-                            style={styles.submitBtn}
-                            onPress={onSubmit}
-                        >
-                            <Text style={styles.submitText}>Enviar</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <UserForm onChange={onInputChange}></UserForm>
+                    <TouchableOpacity
+                        style={styles.submitBtn}
+                        onPress={onSubmit}
+                    >
+                        <Text style={styles.submitText}>Enviar</Text>
+                    </TouchableOpacity>
                     <Text>
                         Ya tiene cuenta?{" "}
                         <TouchableOpacity
@@ -145,7 +111,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     submitBtn: {
-        marginTop: 5,
+        width: "100%",
         backgroundColor: colors.primary,
         padding: 15,
         borderRadius: 5,

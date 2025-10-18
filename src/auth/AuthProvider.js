@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState({});
 
-    const AuthUser = (data) => {
+    const StoreUser = (data) => {
         setUser(data);
         setIsAuthenticated(true);
     };
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
             value={{
                 isAuthenticated,
                 user,
-                AuthUser,
+                StoreUser,
             }}
         >
             {children}

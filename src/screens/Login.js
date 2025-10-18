@@ -1,4 +1,4 @@
-import { colors } from "../../assets/colors";
+//libraries
 import {
     Text,
     View,
@@ -9,12 +9,16 @@ import {
     Platform,
     TouchableOpacity,
 } from "react-native";
-import { useTextInput } from "../hooks/formValues";
+
+//scripts and functions
 import { LoginUser } from "../scripts/users/LoginUser";
 import { useAuth } from "../auth/AuthProvider";
+import { useTextInput } from "../hooks/formValues";
+
+import { colors } from "../../assets/colors";
 
 export default function Login({ navigation }) {
-    const { AuthUser } = useAuth();
+    const { StoreUser } = useAuth();
     const { onInputChange, data } = useTextInput({
         email: "",
         password: "",
@@ -22,8 +26,10 @@ export default function Login({ navigation }) {
 
     const onSubmit = async () => {
         try {
-            const user = await LoginUser(data);
-            AuthUser(user);
+            const { user, message, success } = await LoginUser(data);
+            console.log(message);
+
+            StoreUser(user);
         } catch (error) {
             alert("Ocurrio un error. ", error.message);
         }
