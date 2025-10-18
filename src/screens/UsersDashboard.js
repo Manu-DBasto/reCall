@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import { DataTable } from "react-native-paper";
-//components
-import BottomSheetExample from "../components/layout/Modal";
 
+//components
+import CustomModal from "../components/general/CustomModal";
 //scripts and functions
 import { GetUsers } from "../scripts/users/GetUsers";
 import { UpdateUser } from "../scripts/users/UpdateUser";
@@ -52,7 +52,7 @@ export default function UsersDashboard() {
                     )}
                 />
             </View>
-            <BottomSheetExample></BottomSheetExample>
+            <CustomModal></CustomModal>
         </View>
     );
 }
