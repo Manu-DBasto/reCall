@@ -5,14 +5,29 @@ import { DataTable } from "react-native-paper";
 
 //components
 import CustomModal from "../components/general/CustomModal";
+import UserForm from "../components/users/UserForm";
+
+//hooks
+import { useTextInput } from "../hooks/formValues";
+
 //scripts and functions
 import { GetUsers } from "../scripts/users/GetUsers";
 import { UpdateUser } from "../scripts/users/UpdateUser";
 import { DeleteUser } from "../scripts/users/DeleteUser";
-import { GetUserByEmail } from "../scripts/users/GetUsers";
 
 export default function UsersDashboard() {
     const [users, setUsers] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const [ogEmail, setOgEmail] = useState("");
+
+    const { data, onInputChange, setData } = useTextInput({});
+
+    function handleRole() {
+        setData({
+            ...data,
+            isAdmin: !data.isAdmin,
+        });
+    }
 
     async function fetchUsers() {
         try {
@@ -28,6 +43,28 @@ export default function UsersDashboard() {
         fetchUsers();
     }, []);
 
+    async function onUpdate(email, data) {
+        try {
+            await UpdateUser(email, data);
+            setVisible(false);
+            await fetchUsers();
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
+    async function onDelete(email) {
+        try {
+            await DeleteUser(email);
+            setVisible(false);
+            await fetchUsers();
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
+
     return (
         <View>
             <View>
@@ -40,7 +77,13 @@ export default function UsersDashboard() {
                     data={users}
                     keyExtractor={(users) => users.email}
                     renderItem={({ item, index }) => (
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setData(item);
+                                setVisible(true);
+                                setOgEmail(item.email);
+                            }}
+                        >
                             <DataTable.Row>
                                 <DataTable.Cell>{item.name}</DataTable.Cell>
                                 <DataTable.Cell>{item.email}</DataTable.Cell>
@@ -52,7 +95,35 @@ export default function UsersDashboard() {
                     )}
                 />
             </View>
-            <CustomModal></CustomModal>
+            <CustomModal
+                visible={visible}
+                title="Usuario"
+                onClose={() => {
+                    setVisible(false);
+                }}
+            >
+                <UserForm
+                    onChange={onInputChange}
+                    userData={data}
+                    changeRole={handleRole}
+                ></UserForm>
+                <View>
+                    <TouchableOpacity
+                        onPress={() => {
+                            onUpdate(ogEmail, data);
+                        }}
+                    >
+                        <Text>Actualizar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            onDelete(data.email);
+                        }}
+                    >
+                        <Text>Eliminar</Text>
+                    </TouchableOpacity>
+                </View>
+            </CustomModal>
         </View>
     );
 }

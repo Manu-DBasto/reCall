@@ -6,8 +6,6 @@ export const useTextInput = (formData = {}) => {
     const [data, setData] = useState(formData);
 
     const onInputChange = (input, value) => {
-        // console.log(e);
-
         setData({
             ...data,
             [input]: value,
@@ -16,5 +14,6 @@ export const useTextInput = (formData = {}) => {
     return {
         onInputChange,
         data,
+        setData,
     };
 };

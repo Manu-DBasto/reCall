@@ -6,7 +6,7 @@ import { useAuth } from "../../auth/AuthProvider";
 
 import { colors } from "../../../assets/colors";
 
-export default function UserForm({ onChange }) {
+export default function UserForm({ onChange, userData = {}, changeRole }) {
     const { user } = useAuth();
 
     return (
@@ -16,6 +16,7 @@ export default function UserForm({ onChange }) {
                 placeholder="Nombre"
                 autoCapitalize="words"
                 style={styles.input}
+                value={userData.name}
                 onChangeText={(e) => {
                     onChange("name", e);
                 }}
@@ -26,36 +27,45 @@ export default function UserForm({ onChange }) {
                 autoCapitalize="words"
                 keyboardType="email-address"
                 style={styles.input}
+                value={userData.email}
                 onChangeText={(e) => {
                     onChange("email", e);
                 }}
             />
-            <TextInput
-                id="password"
-                placeholder="Contraseña"
-                autoCapitalize="none"
-                secureTextEntry
-                style={styles.input}
-                onChangeText={(e) => {
-                    onChange("password", e);
-                }}
-            />
-            {user ? (
+            {user.password ? null : (
+                <TextInput
+                    id="password"
+                    placeholder="Contraseña"
+                    autoCapitalize="none"
+                    secureTextEntry
+                    style={styles.input}
+                    value={userData.password}
+                    onChangeText={(e) => {
+                        onChange("password", e);
+                    }}
+                />
+            )}
+            {Object.keys(user).length > 0 ? null : (
                 <TextInput
                     id="confirm_password"
                     placeholder="Confirmar contraseña"
                     autoCapitalize="none"
                     secureTextEntry
                     style={styles.input}
+                    value={userData.confirm_password}
                     onChangeText={(e) => {
                         onChange("confirm_password", e);
                     }}
                 />
-            ) : null}
+            )}
             {user.isAdmin === true ? (
                 <View style={styles.switchInput}>
-                    <Text>Es administrador?</Text>
-                    <Switch />
+                    <Text>Permisos de administrador</Text>
+                    <Switch
+                        id="isAdmin"
+                        value={userData.isAdmin}
+                        onValueChange={() => changeRole()}
+                    />
                 </View>
             ) : null}
         </View>

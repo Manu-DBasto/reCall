@@ -9,8 +9,4 @@ export async function DeleteUser(id = "") {
     } catch (error) {
         console.error(error);
     }
-    /**
-     * ==============Eliminar usuario de autenticathion====================
-     * No tienen que hacerlo en sus flujos normales.
-     */
 }

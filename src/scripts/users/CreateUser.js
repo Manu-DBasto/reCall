@@ -21,10 +21,27 @@ export const CreateUser = async (data) => {
          * ==============Creacion de usuario en firestore==========
          */
         if (!(await GetUserByEmail(data.email))) {
+            if (data.isAdmin) {
+                const user = {
+                    name: data.name,
+                    email: data.email,
+                    isAdmin: data.isAdmin,
+                    password: data.password,
+                    createdAt: new Date(),
+                };
+            } else {
+                const user = {
+                    name: data.name,
+                    email: data.email,
+                    isAdmin: false,
+                    password: data.password,
+                    createdAt: new Date(),
+                };
+            }
             const user = {
                 name: data.name,
                 email: data.email,
-                isAdmin: false,
+                isAdmin: data.isAdmin,
                 password: data.password,
                 createdAt: new Date(),
             };

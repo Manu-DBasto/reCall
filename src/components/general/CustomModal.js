@@ -1,15 +1,29 @@
 import React, { useState } from "react";
 import { View, Text, Modal, StyleSheet, TouchableOpacity } from "react-native";
 
-export default function CustomModal({ visible, onClose, title, children }) {
+import { colors } from "../../../assets/colors";
+
+/** alt + z -> Para ver correctamente
+ * Para usar este componente se deben de pasar 4 props especificamente:
+ * Visible - Debe ser un estado que se ponga en el componente padre y debe ser boleano. A su vez, seria necesario hacer funciones para controlar el cambio de estado
+ *
+ * onClose - es la funcion que servirá para cerrar el modal. Osea pora que el estado cambie a false.
+ *
+ * title - Es una cadena de texto que se agrega como titulo del modal. Ej: "Usuarios"
+ *
+ * children - Es el contenido que estará dentro del modal, por ejemplo un formulario. Este se pone dentro de las etiquetas que conforman al componente. Ej:
+ * <CustomModal><Text>Hola</Text></CustomModal>
+ */
+
+export default function CustomModal({
+    visible = false,
+    onClose,
+    title = "",
+    children,
+    data = {},
+}) {
     return (
-        <Modal
-            animationType="fade" // puedes usar 'slide' o 'none'
-            transparent={true} // importante para el overlay
-            visible={true}
-            onRequestClose={onClose} // para Android con el botón de back
-            hardwareAccelerated={true}
-        >
+        <Modal animationType="fade" transparent={true} visible={visible}>
             <View style={styles.overlay}>
                 <View style={styles.modalContainer}>
                     <View style={styles.header}>
@@ -31,40 +45,19 @@ export default function CustomModal({ visible, onClose, title, children }) {
 }
 
 const styles = StyleSheet.create({
-    // Fondo de la pantalla
-    screen: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: "#f2f2f2",
-        padding: 16,
-    },
-    // Botón para abrir el modal
-    openButton: {
-        backgroundColor: "#1e90ff",
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-    },
-    openButtonText: {
-        color: "#fff",
-        fontWeight: "600",
-    },
-    // Overlay que oscurece el fondo
     overlay: {
         flex: 1,
         backgroundColor: "rgba(0, 0, 0, 0.5)", // oscurece el fondo
         justifyContent: "center",
         alignItems: "center",
     },
-    // Contenedor del modal (fondo blanco)
     modalContainer: {
         width: "85%",
         maxWidth: 480,
-        backgroundColor: "#ffffff", // fondo blanco del modal
-        borderRadius: 12,
-        paddingTop: 14,
-        paddingBottom: 8,
+        backgroundColor: colors.background, // fondo blanco del modal
+        borderRadius: 10,
+        paddingTop: 15,
+        paddingBottom: 10,
         // Sombra para iOS
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 6 },
@@ -73,66 +66,32 @@ const styles = StyleSheet.create({
         // Sombra para Android
         elevation: 10,
     },
-    // Cabecera con título y botón de cerrar
     header: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        paddingHorizontal: 14,
-        paddingBottom: 6,
+        paddingHorizontal: 15,
+        paddingBottom: 5,
     },
     title: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: "700",
-        color: "#333",
+        color: colors.textDark,
     },
     closeButton: {
-        width: 32,
-        height: 32,
-        borderRadius: 16,
+        width: 30,
+        height: 30,
+        borderRadius: 15,
         alignItems: "center",
         justifyContent: "center",
     },
     closeButtonText: {
-        fontSize: 18,
-        color: "#666",
-    },
-    // Contenido del modal
-    content: {
-        paddingHorizontal: 14,
-        paddingVertical: 8,
-    },
-    paragraph: {
         fontSize: 15,
-        color: "#444",
-        marginBottom: 12,
+        color: colors.secondary,
     },
-    // Área de acciones
-    actionsRow: {
-        flexDirection: "row",
-        justifyContent: "flex-end",
-        paddingHorizontal: 14,
-        paddingTop: 6,
-    },
-    primaryButton: {
-        backgroundColor: "#1e90ff",
+    content: {
+        paddingHorizontal: 15,
         paddingVertical: 10,
-        paddingHorizontal: 16,
-        borderRadius: 6,
-        marginLeft: 8,
-    },
-    primaryButtonText: {
-        color: "#fff",
-        fontWeight: "600",
-    },
-    secondaryButton: {
-        backgroundColor: "#eaeef3",
-        paddingVertical: 10,
-        paddingHorizontal: 12,
-        borderRadius: 6,
-    },
-    secondaryButtonText: {
-        color: "#333",
-        fontWeight: "600",
+        alignItems: "center",
     },
 });

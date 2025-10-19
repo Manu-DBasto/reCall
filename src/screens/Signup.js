@@ -52,7 +52,10 @@ export default function Signup({ navigation }) {
             <ScrollView contentContainerStyle={styles.scrollContainer}>
                 <View style={styles.wrapper}>
                     <Text style={styles.title}>Registrarse</Text>
-                    <UserForm onChange={onInputChange}></UserForm>
+                    <UserForm
+                        onChange={onInputChange}
+                        userData={data}
+                    ></UserForm>
                     <TouchableOpacity
                         style={styles.submitBtn}
                         onPress={onSubmit}
