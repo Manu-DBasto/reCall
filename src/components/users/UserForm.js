@@ -64,7 +64,7 @@ export default function UserForm({ onChange, userData = {}, changeRole }) {
                     <Switch
                         id="isAdmin"
                         value={userData.isAdmin}
-                        onValueChange={() => changeRole()}
+                        onValueChange={() => changeRole(userData.isAdmin)}
                     />
                 </View>
             ) : null}

@@ -20,13 +20,10 @@ export default function UsersDashboard() {
     const [visible, setVisible] = useState(false);
     const [ogEmail, setOgEmail] = useState("");
 
-    const { data, onInputChange, setData } = useTextInput({});
+    const { data, onInputChange, handleDataChange } = useTextInput({});
 
-    function handleRole() {
-        setData({
-            ...data,
-            isAdmin: !data.isAdmin,
-        });
+    async function handleRole(role) {
+        await handleDataChange("isAdmin", !role);
     }
 
     async function fetchUsers() {

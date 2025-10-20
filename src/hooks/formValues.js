@@ -11,9 +11,18 @@ export const useTextInput = (formData = {}) => {
             [input]: value,
         });
     };
+
+    const handleDataChange = (dataName, dataValue) => {
+        console.log(dataName, dataValue);
+
+        setData({
+            ...data,
+            [dataName]: dataValue,
+        });
+    };
     return {
         onInputChange,
         data,
-        setData,
+        handleDataChange,
     };
 };
