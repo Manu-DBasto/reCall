@@ -6,23 +6,12 @@ import { GetUserByEmail } from "./GetUsers";
 export const CreateUser = async (data) => {
     try {
         /**
-         * ==============Autenticacion===============
-         * Esta parte del codigo solo es necesaria por que debo crear un usuario en la tabla de autenticacion y luego sus demas datos se guardan en firestore. Que es la base de datos que se estará utilizando, por lo tanto es la que usarán.
-         */
-        // const userCredential = await createUserWithEmailAndPassword(
-        //     auth,
-        //     data.email,
-        //     data.password
-        // );
-        // const user = userCredential.user;
-        // await updateProfile(user, { displayName: data.name });
-
-        /**
          * ==============Creacion de usuario en firestore==========
          */
         if (!(await GetUserByEmail(data.email))) {
+            let user;
             if (data.isAdmin) {
-                const user = {
+                user = {
                     name: data.name,
                     email: data.email,
                     isAdmin: data.isAdmin,
@@ -30,7 +19,7 @@ export const CreateUser = async (data) => {
                     createdAt: new Date(),
                 };
             } else {
-                const user = {
+                user = {
                     name: data.name,
                     email: data.email,
                     isAdmin: false,
@@ -38,13 +27,6 @@ export const CreateUser = async (data) => {
                     createdAt: new Date(),
                 };
             }
-            const user = {
-                name: data.name,
-                email: data.email,
-                isAdmin: data.isAdmin,
-                password: data.password,
-                createdAt: new Date(),
-            };
             await setDoc(doc(db, "users", user.email), user);
             return {
                 success: true,

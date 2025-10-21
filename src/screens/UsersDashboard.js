@@ -20,7 +20,9 @@ export default function UsersDashboard() {
     const [visible, setVisible] = useState(false);
     const [ogEmail, setOgEmail] = useState("");
 
-    const { data, onInputChange, handleDataChange } = useTextInput({});
+    const { data, onInputChange, handleDataChange, rewriteData } = useTextInput(
+        {}
+    );
 
     async function handleRole(role) {
         await handleDataChange("isAdmin", !role);
@@ -76,7 +78,8 @@ export default function UsersDashboard() {
                     renderItem={({ item, index }) => (
                         <TouchableOpacity
                             onPress={() => {
-                                setData(item);
+                                // setData(item);
+                                rewriteData(item);
                                 setVisible(true);
                                 setOgEmail(item.email);
                             }}

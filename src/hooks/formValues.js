@@ -13,16 +13,19 @@ export const useTextInput = (formData = {}) => {
     };
 
     const handleDataChange = (dataName, dataValue) => {
-        console.log(dataName, dataValue);
-
         setData({
             ...data,
             [dataName]: dataValue,
         });
     };
+
+    const rewriteData = (newValues) => {
+        setData(newValues);
+    };
     return {
         onInputChange,
         data,
         handleDataChange,
+        rewriteData,
     };
 };
