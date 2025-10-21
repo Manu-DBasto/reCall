@@ -1,7 +1,8 @@
 //libraries
 import React, { useEffect, useState } from "react";
-import { Text, View, FlatList, TouchableOpacity } from "react-native";
+import { Text, View, FlatList, TouchableOpacity, StyleSheet } from "react-native";
 import { DataTable } from "react-native-paper";
+
 
 //components
 import CustomModal from "../components/general/CustomModal";
@@ -20,7 +21,7 @@ export default function UsersDashboard() {
     const [visible, setVisible] = useState(false);
     const [ogEmail, setOgEmail] = useState("");
 
-    const { data, setData, onInputChange, handleDataChange } = useTextInput({});
+    const { data,setData, onInputChange, handleDataChange } = useTextInput({});
 
     async function handleRole(role) {
         await handleDataChange("isAdmin", !role);
@@ -124,3 +125,4 @@ export default function UsersDashboard() {
         </View>
     );
 }
+

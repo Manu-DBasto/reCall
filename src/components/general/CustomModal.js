@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     modalContainer: {
         width: "85%",
         maxWidth: 480,
-        backgroundColor: colors.background, // fondo blanco del modal
+        backgroundColor: colors.form, // fondo blanco del modal
         borderRadius: 10,
         paddingTop: 15,
         paddingBottom: 10,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: "700",
-        color: colors.textDark,
+        color: colors.secondary,
     },
     closeButton: {
         width: 30,

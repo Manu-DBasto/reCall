@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     },
     wrapper: {
         borderColor: colors.secondary,
+        backgroundColor: colors.form,
         borderWidth: 1,
         borderRadius: 10,
         alignItems: "center",
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
     },
     input: {
         borderColor: colors.secondary,
+        backgroundColor: colors.formInput,
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,
