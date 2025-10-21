@@ -23,6 +23,7 @@ export const useTextInput = (formData = {}) => {
     return {
         onInputChange,
         data,
+        setData,
         handleDataChange,
     };
 };
