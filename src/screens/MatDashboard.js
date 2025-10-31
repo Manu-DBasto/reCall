@@ -43,7 +43,7 @@ export default function MatDashboard() {
     async function onCreate() {
         try {
             await CreateMat(data);
-            setVisible(false);
+            setVisible2(false);
             await fetchMats();
         } catch (error) {
             console.error("Error creating material: ", error);
