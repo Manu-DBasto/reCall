@@ -18,11 +18,15 @@ export async function GetMatById(matId) {
         throw error;
     }
 }
-export async function GetLastMat(){
-    const rest = await getDocs(query(collection(db, "mats")));
-    const lastMat = rest.docs[rest.docs.length - 1];
+export async function GetLastMat(db) {
+    const res = await getDocs(query(collection(db, "mats")));
+
+    if (res.empty) return null; // Si no hay documentos, retornar null
+
+    // Obtener el último material (por posición)
+    const lastMatDoc = res.docs[res.docs.length - 1];
     return {
-        id: lastMat.id,
-        ...lastMat.data(),
+        id: Number(lastMatDoc.data().id),
+        ...lastMatDoc.data(),
     };
 }

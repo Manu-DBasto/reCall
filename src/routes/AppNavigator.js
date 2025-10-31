@@ -15,7 +15,6 @@ export default function AppNavigator() {
                 <drawer.Screen name="Usuarios" component={UsersDashboard} />
             ) : null}
 
-            <drawer.Screen name="Inicio" component={Home} />
             {user.isAdmin ? (
                 <drawer.Screen name="Materiales" component={MatDashboard} />
             ) : null}
