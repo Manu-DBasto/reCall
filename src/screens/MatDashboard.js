@@ -28,8 +28,9 @@ export default function MatDashboard() {
     // Cargar materiales
     async function fetchMats() {
         try {
-            const data = await GetMats();
-            setMaterials(data);
+            const materiales = await GetMats();
+            setMaterials(materiales);
+            rewriteData({ name: "", reciclable: false });
         } catch (error) {
             console.error("Error fetching materials: ", error);
         }
@@ -45,6 +46,8 @@ export default function MatDashboard() {
             await CreateMat(data);
             setVisible2(false);
             await fetchMats();
+            setSelectedMatId(null);
+            
         } catch (error) {
             console.error("Error creating material: ", error);
         }
@@ -114,6 +117,8 @@ export default function MatDashboard() {
                 onClose={() => {
                     setVisible(false);
                     setSelectedMatId(null);
+
+                    rewriteData({ name: "", reciclable: false });
                 }}
             >
                 <MatForm onChange={onInputChange} matData={data} />
@@ -148,7 +153,13 @@ export default function MatDashboard() {
             <CustomModal
                 visible={visible2}
                 title="Nuevo material"
-                onClose={() => setVisible2(false)}
+                onClose={() => {
+                    setVisible2(false);
+                    rewriteData({ name: "", reciclable: false });
+                }
+                    
+                }
+                
             >
                 <MatForm onChange={onInputChange} matData={data} />
 

@@ -1,5 +1,6 @@
 import { db } from "../database";
 import { getDoc, doc, query, collection, getDocs } from "firebase/firestore";
+
 export async function GetMats() {
     const res = await getDocs(query(collection(db, "mats")));
     const mats = res.docs.map((doc) => ({
@@ -8,6 +9,7 @@ export async function GetMats() {
     }));
     return mats;
 }
+
 export async function GetMatById(matId) {
     try {
         const docRef = doc(db, "mats", matId);
@@ -21,9 +23,8 @@ export async function GetMatById(matId) {
 export async function GetLastMat() {
     const res = await getDocs(query(collection(db, "mats")));
 
-    if (res.empty) return null; // Si no hay documentos, retornar null
+    if (res.empty) return null;
 
-    // Obtener el último material (por posición)
     const lastMatDoc = res.docs[res.docs.length - 1];
     return {
         id: Number(lastMatDoc.data().id),
