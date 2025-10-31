@@ -5,123 +5,113 @@ import { DataTable } from "react-native-paper";
 
 //components
 import CustomModal from "../components/general/CustomModal";
-import UserForm from "../components/users/UserForm";
+import MatForm from "../components/mats/MatForm";
 
 //hooks
 import { useTextInput } from "../hooks/formValues";
 
-//scripts and functions
-import { GetUsers } from "../scripts/users/GetUsers";
-import { UpdateUser } from "../scripts/users/UpdateUser";
-import { DeleteUser } from "../scripts/users/DeleteUser";
+//scripts
+import { GetMats } from "../scripts/mats/GetMats";
+import { CreateMat } from "../scripts/mats/CreateMat";
+import { UpdateMat } from "../scripts/mats/UpdateMat";
 
 export default function MatDashboard() {
-    const [users, setUsers] = useState([]);
+    const [materials, setMaterials] = useState([]);
     const [visible, setVisible] = useState(false);
-    const [ogEmail, setOgEmail] = useState("");
+    const [selectedMatId, setSelectedMatId] = useState(null);
 
-    const { data, onInputChange, handleDataChange, rewriteData } = useTextInput(
-        {}
-    );
+    const { data, onInputChange, rewriteData } = useTextInput({});
 
-    async function handleRole(role) {
-        await handleDataChange("isAdmin", !role);
-    }
-
-    async function fetchUsers() {
+    // Cargar materiales
+    async function fetchMats() {
         try {
-            const data = await GetUsers();
-            setUsers(data);
+            const data = await GetMats();
+            setMaterials(data);
         } catch (error) {
-            console.error("Error fetching users: ", error);
-            throw error;
+            console.error("Error fetching materials: ", error);
         }
     }
 
     useEffect(() => {
-        fetchUsers();
+        fetchMats();
     }, []);
 
-    async function onUpdate(email, data) {
+    // Crear material
+    async function onCreate() {
         try {
-            await UpdateUser(email, data);
+            await CreateMat(data);
             setVisible(false);
-            await fetchUsers();
+            await fetchMats();
         } catch (error) {
-            console.error(error);
-            throw error;
+            console.error("Error creating material: ", error);
         }
     }
 
-    async function onDelete(email) {
+    // Actualizar material
+    async function onUpdate(id, data) {
         try {
-            await DeleteUser(email);
+            await UpdateMat(id, data);
             setVisible(false);
-            await fetchUsers();
+            await fetchMats();
         } catch (error) {
-            console.error(error);
-            throw error;
+            console.error("Error updating material: ", error);
         }
     }
 
     return (
         <View>
-            <View>
+            <DataTable>
                 <DataTable.Header>
+                    <DataTable.Title>ID</DataTable.Title>
                     <DataTable.Title>Nombre</DataTable.Title>
-                    <DataTable.Title>Email</DataTable.Title>
-                    <DataTable.Title>Permisos de administrador</DataTable.Title>
+                    <DataTable.Title>Reciclable</DataTable.Title>
                 </DataTable.Header>
+
                 <FlatList
-                    data={users}
-                    keyExtractor={(users) => users.email}
-                    renderItem={({ item, index }) => (
+                    data={materials}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => (
                         <TouchableOpacity
                             onPress={() => {
-                                // setData(item);
                                 rewriteData(item);
+                                setSelectedMatId(item.id);
                                 setVisible(true);
-                                setOgEmail(item.email);
                             }}
                         >
                             <DataTable.Row>
+                                <DataTable.Cell>{item.id}</DataTable.Cell>
                                 <DataTable.Cell>{item.name}</DataTable.Cell>
-                                <DataTable.Cell>{item.email}</DataTable.Cell>
                                 <DataTable.Cell>
-                                    <Text>{item.isAdmin ? "Si" : "No"}</Text>
+                                    <Text>{item.reciclable ? "Sí" : "No"}</Text>
                                 </DataTable.Cell>
                             </DataTable.Row>
                         </TouchableOpacity>
                     )}
                 />
-            </View>
+            </DataTable>
+
             <CustomModal
                 visible={visible}
-                title="Usuario"
+                title={selectedMatId ? "Editar material" : "Nuevo material"}
                 onClose={() => {
                     setVisible(false);
+                    setSelectedMatId(null);
                 }}
             >
-                <UserForm
-                    onChange={onInputChange}
-                    userData={data}
-                    changeRole={handleRole}
-                ></UserForm>
+                <MatForm onChange={onInputChange} matData={data} />
+
                 <View>
-                    <TouchableOpacity
-                        onPress={() => {
-                            onUpdate(ogEmail, data);
-                        }}
-                    >
-                        <Text>Actualizar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => {
-                            onDelete(data.email);
-                        }}
-                    >
-                        <Text>Eliminar</Text>
-                    </TouchableOpacity>
+                    {selectedMatId ? (
+                        <TouchableOpacity
+                            onPress={() => onUpdate(selectedMatId, data)}
+                        >
+                            <Text>Actualizar</Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity onPress={onCreate}>
+                            <Text>Crear</Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
             </CustomModal>
         </View>

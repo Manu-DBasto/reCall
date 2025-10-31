@@ -1,6 +1,7 @@
 //libraries
 import { TextInput, StyleSheet, View, Switch, Text } from "react-native";
-import colors from "../../../assets/colors;"
+import { colors } from "../../../assets/colors";
+
 
 export default function MatForm({ onChange, matData = {} }) {
     return (
