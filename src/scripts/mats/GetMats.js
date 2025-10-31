@@ -18,7 +18,7 @@ export async function GetMatById(matId) {
         throw error;
     }
 }
-export async function GetLastMat(db) {
+export async function GetLastMat() {
     const res = await getDocs(query(collection(db, "mats")));
 
     if (res.empty) return null; // Si no hay documentos, retornar null

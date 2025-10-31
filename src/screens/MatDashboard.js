@@ -1,6 +1,7 @@
 //libraries
 import React, { useEffect, useState } from "react";
-import { Text, View, FlatList, TouchableOpacity } from "react-native";
+import { Text, View, FlatList, TouchableOpacity, StyleSheet, Alert } from "react-native";
+
 import { DataTable } from "react-native-paper";
 
 //components
@@ -14,11 +15,13 @@ import { useTextInput } from "../hooks/formValues";
 import { GetMats } from "../scripts/mats/GetMats";
 import { CreateMat } from "../scripts/mats/CreateMat";
 import { UpdateMat } from "../scripts/mats/UpdateMat";
+import { DeleteMat } from "../scripts/mats/DeleteMat";
 
 export default function MatDashboard() {
     const [materials, setMaterials] = useState([]);
     const [visible, setVisible] = useState(false);
     const [selectedMatId, setSelectedMatId] = useState(null);
+    const [visible2, setVisible2] = useState(false);
 
     const { data, onInputChange, rewriteData } = useTextInput({});
 
@@ -53,13 +56,28 @@ export default function MatDashboard() {
             await UpdateMat(id, data);
             setVisible(false);
             await fetchMats();
+            setSelectedMatId(null);
         } catch (error) {
             console.error("Error updating material: ", error);
         }
     }
 
+    async function onDelete(id) {
+        try {
+            await DeleteMat(id);
+            setVisible(false);
+            setSelectedMatId(null);
+            await fetchMats();
+        } catch (error) {
+            console.error("Error deleting material: ", error);
+        }
+    }
+
+
     return (
-        <View>
+        <View
+            style={styles.container}
+        >
             <DataTable>
                 <DataTable.Header>
                     <DataTable.Title>ID</DataTable.Title>
@@ -101,19 +119,86 @@ export default function MatDashboard() {
                 <MatForm onChange={onInputChange} matData={data} />
 
                 <View>
-                    {selectedMatId ? (
-                        <TouchableOpacity
-                            onPress={() => onUpdate(selectedMatId, data)}
-                        >
-                            <Text>Actualizar</Text>
-                        </TouchableOpacity>
-                    ) : (
-                        <TouchableOpacity onPress={onCreate}>
-                            <Text>Crear</Text>
-                        </TouchableOpacity>
-                    )}
+                    <TouchableOpacity
+                        onPress={() => onUpdate(selectedMatId, data)}
+                    >
+                        <Text>Actualizar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => onDelete(selectedMatId)}
+                    >
+                        <Text>Eliminar</Text>
+                    </TouchableOpacity>
                 </View>
             </CustomModal>
+
+
+            <TouchableOpacity
+                style={styles.fab}
+                onPress={() => {
+                    console.log("✅ Botón presionado");
+                    setVisible2(true);
+
+
+                }}
+            >
+                <Text style={styles.fabText}>+</Text>
+            </TouchableOpacity>
+
+            <CustomModal
+                visible={visible2}
+                title="Nuevo material"
+                onClose={() => setVisible2(false)}
+            >
+                <MatForm onChange={onInputChange} matData={data} />
+
+                <TouchableOpacity style={styles.actionButton} onPress={onCreate}>
+                    <Text style={styles.actionButtonText}>Crear</Text>
+                </TouchableOpacity>
+            </CustomModal>
+
+
         </View>
+
     );
 }
+
+// --- Estilos ---
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: 10,
+        position: "relative",
+    },
+    fab: {
+        position: "absolute",
+        bottom: 20,
+        right: 20,
+        backgroundColor: "#2196F3",
+        borderRadius: 50,
+        width: 60,
+        height: 60,
+        alignItems: "center",
+        justifyContent: "center",
+        elevation: 8,
+        zIndex: 100,
+    },
+    fabText: {
+        color: "#fff",
+        fontSize: 32,
+        lineHeight: 32,
+        marginBottom: 2,
+    },
+    actionButton: {
+        backgroundColor: "#2196F3",
+        padding: 12,
+        borderRadius: 8,
+        marginTop: 10,
+        alignItems: "center",
+    },
+    actionButtonText: {
+        color: "#fff",
+        fontWeight: "bold",
+    },
+});
+

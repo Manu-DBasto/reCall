@@ -21,8 +21,8 @@ export default function MatForm({ onChange, matData = {} }) {
                 <Text>¿Es reciclable?</Text>
                 <Switch
                     id="recyclable"
-                    value={matData.recyclable}
-                    onValueChange={(value) => onChange("recyclable", value)}
+                    value={matData.reciclable}
+                    onValueChange={(value) => onChange("reciclable", value)}
                 />
             </View>
         </View>

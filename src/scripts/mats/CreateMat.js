@@ -1,11 +1,11 @@
 import { doc, setDoc } from "firebase/firestore";
-
+import { db } from "../database";
 import {GetLastMat} from "./GetMats";
 
-export const CreateMat = async (db, data) => {
+export const CreateMat = async ( data) => {
     try {
         // Intentar obtener el último material
-        const lastMat = await GetLastMat(db);
+        const lastMat = await GetLastMat();
 
         // Si no hay materiales aún, el id será 1
         const newId = lastMat ? lastMat.id + 1 : 1;
