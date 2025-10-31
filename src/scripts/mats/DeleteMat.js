@@ -1,5 +1,5 @@
 import { deleteDoc, doc } from "firebase/firestore";
-import { deleteUser } from "firebase/auth";
+
 import { db, auth } from "../database";
 
 export async function DeleteMat(id = "") {
