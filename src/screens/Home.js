@@ -51,6 +51,13 @@ export default function Home() {
 
     return (
         <View>
+            <TouchableOpacity
+                onPress={() => {
+                    setVisible(!visible);
+                }}
+            >
+                <Text>Solicitar servicio</Text>
+            </TouchableOpacity>
             <View style={styles.tableContainer}>
                 <FlatList
                     data={serviceRequest}
@@ -79,6 +86,15 @@ export default function Home() {
                     )}
                 />
             </View>
+            <CustomModal
+                visible={visible}
+                title="Servicio"
+                onClose={() => {
+                    setVisible(false);
+                }}
+            >
+                <Text>Hola</Text>
+            </CustomModal>
         </View>
     );
 }
