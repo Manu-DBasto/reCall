@@ -3,7 +3,7 @@ import { Text, View, Button } from "react-native";
 export default function Home() {
     return (
         <View>
-            <Text>Bienvenido</Text>
+            <Text>Bienvenido tilin</Text>
         </View>
     );
 }
