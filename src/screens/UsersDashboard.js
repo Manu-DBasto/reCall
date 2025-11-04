@@ -32,6 +32,7 @@ export default function UsersDashboard() {
         try {
             const data = await GetUsers();
             setUsers(data);
+            console.log(data);
         } catch (error) {
             console.error("Error fetching users: ", error);
             throw error;
@@ -68,9 +69,9 @@ export default function UsersDashboard() {
         <View>
             <View>
                 <DataTable.Header>
-                    <DataTable.Title>Nombre</DataTable.Title>
-                    <DataTable.Title>Email</DataTable.Title>
-                    <DataTable.Title>Permisos de administrador</DataTable.Title>
+                    <DataTable.Title>Nombre de usuario</DataTable.Title>
+                    <DataTable.Title>Correo Electronico</DataTable.Title>
+                    <DataTable.Title>Administrador</DataTable.Title>
                 </DataTable.Header>
                 <FlatList
                     data={users}
@@ -97,7 +98,7 @@ export default function UsersDashboard() {
             </View>
             <CustomModal
                 visible={visible}
-                title="Usuario"
+                title="Información del usuario"
                 onClose={() => {
                     setVisible(false);
                 }}
@@ -113,7 +114,7 @@ export default function UsersDashboard() {
                             onUpdate(ogEmail, data);
                         }}
                     >
-                        <Text>Actualizar</Text>
+                        <Text>Aceptar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => {
