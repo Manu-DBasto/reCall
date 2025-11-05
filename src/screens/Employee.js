@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { View, FlatList, StyleSheet } from "react-native";
 import { TextInput, Button, Card, Text } from "react-native-paper";
-import { db } from "../scripts/database"; // 👈 Ruta corregida, no desde firebase-config
+import { db } from "../scripts/database"; 
 import {
     collection,
     addDoc,
