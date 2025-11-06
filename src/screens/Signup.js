@@ -125,6 +125,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     link: {
-        color: "#2e8ebaff",
+        color: colors.textLight,
     },
 });
