@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
     },
     wrapper: {
         borderColor: colors.secondary,
+        backgroundColor: colors.secondary,
         borderWidth: 1,
         borderRadius: 10,
         alignItems: "center",
@@ -135,6 +136,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     link: {
-        color: "#2e8ebaff",
+        color: colors.textLight,
+        textDecorationLine: "underline",
     },
 });

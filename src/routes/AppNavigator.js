@@ -5,6 +5,7 @@ import UsersDashboard from "../screens/UsersDashboard";
 import MatDashboard from "../screens/MatDashboard";
 import Employee from "../screens/Employee";
 import { useAuth } from "../auth/AuthProvider";
+import {colors} from "../../assets/colors"
 const drawer = createDrawerNavigator();
 
 export default function AppNavigator() {

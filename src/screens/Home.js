@@ -139,7 +139,9 @@ export default function Home() {
     };
 
     return (
-        <View>
+        <View 
+        
+        >
             <TouchableOpacity
                 onPress={() => {
                     setVisible(!visible);
@@ -347,6 +349,9 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
+    body:{
+        backgroundColor: colors.background,
+    },
     row: {
         padding: 10,
     },
@@ -414,13 +419,15 @@ const styles = StyleSheet.create({
         fontWeight: 600,
         textAlign: "center",
     },
+
+
     // === NUEVOS ESTILOS PARA EL TICKET ===
     ticketContainer: {
         width: 300,
-        backgroundColor: colors.textLight, // Fondo blanco para simular papel
+        backgroundColor: colors.textLight, 
         padding: 15,
         borderWidth: 1,
-        borderColor: colors.textDark, // Borde simple o puedes usar 'dashed'
+        borderColor: colors.textDark, 
         borderRadius: 5,
         gap: 8,
     },
@@ -444,7 +451,7 @@ const styles = StyleSheet.create({
     ticketDivider: {
         borderBottomColor: colors.textDark,
         borderBottomWidth: 1,
-        borderStyle: "dashed", // Simula la línea de corte de un ticket
+        borderStyle: "dashed", 
         marginVertical: 5,
     },
     ticketFooter: {
