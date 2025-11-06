@@ -139,15 +139,14 @@ export default function Home() {
     };
 
     return (
-        <View 
-        
+        <View
+            style={styles.body}
         >
             <TouchableOpacity
-                onPress={() => {
-                    setVisible(!visible);
-                }}
+                style={styles.fab}
+                onPress={() => setVisible(true)}
             >
-                <Text>Solicitar servicio</Text>
+                <Text style={styles.fabIcon}>＋</Text>
             </TouchableOpacity>
             <View style={styles.tableContainer}>
                 <FlatList
@@ -196,13 +195,13 @@ export default function Home() {
                             Fecha:{" "}
                             {serviceReg.created_at
                                 ? new Date(
-                                      serviceReg.created_at
-                                  ).toLocaleDateString()
+                                    serviceReg.created_at
+                                ).toLocaleDateString()
                                 : "N/A"}{" "}
                             {serviceReg.created_at
                                 ? new Date(
-                                      serviceReg.created_at
-                                  ).toLocaleTimeString()
+                                    serviceReg.created_at
+                                ).toLocaleTimeString()
                                 : ""}
                         </Text>
                         <View style={styles.ticketDivider} />
@@ -349,8 +348,10 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-    body:{
+    body: {
+        flex: 1,
         backgroundColor: colors.background,
+        padding: 16,
     },
     row: {
         padding: 10,
@@ -424,10 +425,10 @@ const styles = StyleSheet.create({
     // === NUEVOS ESTILOS PARA EL TICKET ===
     ticketContainer: {
         width: 300,
-        backgroundColor: colors.textLight, 
+        backgroundColor: colors.textLight,
         padding: 15,
         borderWidth: 1,
-        borderColor: colors.textDark, 
+        borderColor: colors.textDark,
         borderRadius: 5,
         gap: 8,
     },
@@ -451,7 +452,7 @@ const styles = StyleSheet.create({
     ticketDivider: {
         borderBottomColor: colors.textDark,
         borderBottomWidth: 1,
-        borderStyle: "dashed", 
+        borderStyle: "dashed",
         marginVertical: 5,
     },
     ticketFooter: {
@@ -463,5 +464,27 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 10,
         color: colors.textDark,
+    },
+
+    fab: {
+        position: "absolute",
+        bottom: 20,
+        right: 20,
+        backgroundColor: colors.primary,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: "center",
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        elevation: 5, // Para Android
+    },
+    fabIcon: {
+        fontSize: 32,
+        color: colors.textLight,
+        marginBottom: 2,
     },
 });
