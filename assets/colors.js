@@ -7,4 +7,5 @@ export const colors = {
     success: "#74a892",
     warning: "#f8e16f",
     danger: "#dd6670",
+    formInput: "#fbedc9ff",
 };
